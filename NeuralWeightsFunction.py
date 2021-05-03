@@ -144,7 +144,7 @@ def calc_x_uninitialized(x,training_data,training_weights):
 		Big_A = 1
 		for training_item in training_data:
 			j = 0
-			while ((A == 1) and (j < x)):
+			while ((Big_A == 1) and (j < x)):
 				if (training_item[j] * training_weight[j] >= .9):
 					Big_A = 1
 				else:
@@ -158,6 +158,8 @@ def calc_x3_internal(x_0,x_1,x_2, training_data, training_weights):
 		return calc_x_uninitialized(x,training_data,training_weights)
 	top_half = f(x_2)*((x_0**2)-(x_1**2)) + f(x_0)*((x_1**2)-(x_2**2)) + f(x_1)*((x_2**2)-(x_0**2))
 	bottom_half = 2*f(x_2)*(x_0-x_1) +  2*f(x_0)*(x_1-x_2) +  2*f(x_1)*(x_2-x_0)
+	if bottom_half == 0:
+		return 1
 	return top_half/bottom_half
 
 def calc_x(x_0,x_1,x_2, training_data, training_weights):
@@ -176,13 +178,18 @@ def calc_x(x_0,x_1,x_2, training_data, training_weights):
 		elif (f_x_3 < f_x_2):
 			x_0 = x_3
 			f_x_2 = f_x_3
+		print("I'm here")
 
 		x_1 = x_3
 		f_x_1 = f_x_3
 		top_half = f_x_2*((x_0**2)-(x_1**2)) + f(x_0)*((x_1**2)-(x_2**2)) + f_x_1*((x_2**2)-(x_0**2))
 		bottom_half = 2*f_x_2*(x_0-x_1) +  2*f(x_0)*(x_1-x_2) +  2*f_x_1*(x_2-x_0)
-		x_3 = top_half/bottom_half
+		if bottom_half == 0:
+			x_3 = 1
+		else:
+			x_3 = top_half/bottom_half
 		f_x_3 = f(x_3)
+	print(f_x_3)
 	return x_1
-
+calc_x(x_0,x_1,x_2, inputs, weights)
 # Use X_1 to creat the binary clasification somehow???
