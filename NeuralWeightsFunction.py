@@ -141,10 +141,11 @@ x_3 = 0 # Not Initialized Yet.
 def calc_x_uninitialized(x,training_data,training_weights):
 	calc_sum = 0
 	for training_weight in training_weights:
-		Big_A = 1
+		#Big_A = 1
 		for training_item in training_data:
+			Big_A = 1
 			j = 0
-			while ((Big_A == 1) and (j < x)):
+			while ((Big_A == 1) and (j < x) and (j < len(training_weights[0]))) :
 				if (training_item[j] * training_weight[j] >= .9):
 					Big_A = 1
 				else:
@@ -159,7 +160,7 @@ def calc_x3_internal(x_0,x_1,x_2, training_data, training_weights):
 	top_half = f(x_2)*((x_0**2)-(x_1**2)) + f(x_0)*((x_1**2)-(x_2**2)) + f(x_1)*((x_2**2)-(x_0**2))
 	bottom_half = 2*f(x_2)*(x_0-x_1) +  2*f(x_0)*(x_1-x_2) +  2*f(x_1)*(x_2-x_0)
 	if bottom_half == 0:
-		return 1
+		return top_half/.001
 	return top_half/bottom_half
 
 def calc_x(x_0,x_1,x_2, training_data, training_weights):
@@ -185,11 +186,50 @@ def calc_x(x_0,x_1,x_2, training_data, training_weights):
 		top_half = f_x_2*((x_0**2)-(x_1**2)) + f(x_0)*((x_1**2)-(x_2**2)) + f_x_1*((x_2**2)-(x_0**2))
 		bottom_half = 2*f_x_2*(x_0-x_1) +  2*f(x_0)*(x_1-x_2) +  2*f_x_1*(x_2-x_0)
 		if bottom_half == 0:
-			x_3 = 1
+			x_3 = top_half/.001
 		else:
 			x_3 = top_half/bottom_half
 		f_x_3 = f(x_3)
 	print(f_x_3)
 	return x_1
-calc_x(x_0,x_1,x_2, inputs, weights)
+#print(calc_x(x_0,x_1,x_2, inputs, weights))
 # Use X_1 to creat the binary clasification somehow???
+
+#classifier(x_0,x_1,x_2, new_inputs,  ,trained_weights)
+
+
+def fulltest():
+	print("Starting Weights and Answer Estimation")
+	print([weights, biases])
+	#print(neuron_layer(weights,inputs,biases,sigmoid_neuron))
+	listofnewweightsbiases = bulk_training(weights,biases, inputs, sigmoid_neuron, expectedOutput)
+	print("Ending Weights and Answer Estimation")
+	print(listofnewweightsbiases)
+	
+	classifier_x = calc_x(x_0,x_1,x_2, inputs, listofnewweightsbiases[0])
+	print("Classifier Rule Estimation")
+	print(classifier_x)
+
+	somevalue = 3
+	def my_rule(x):
+		if my_sigmoid(x) > classifier_x:
+			return 1
+		else:
+			return 0
+	print(my_rule(somevalue))
+
+
+fulltest()
+
+# Example Output
+# Starting
+# Starting Weights and Answer Estimation
+# [array([[0.49534594, 0.19905671, 0.6490372 ],
+#        [0.13796504, 0.03065438, 0.23359039]]), array([0.17716456, 0.01078745])]
+# Ending Weights and Answer Estimation
+# [[array([ 1.45900802,  1.1627188 , -0.31284341]), array([1.0748309 , 0.96752024, 0.33563812])], [0.44646131039396936, 0.2944449358994945]]
+# I'm here
+# 6
+# Classifier Rule Estimation
+# -0.5
+# [Finished in 0.7s]
