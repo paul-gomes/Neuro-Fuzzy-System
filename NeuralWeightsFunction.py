@@ -110,6 +110,9 @@ def bulk_training(weightLists, biases, inputLists, sigmoid_neuron, expectedValue
 		biases = listofnewweightsbiases[1]
 	return listofnewweightsbiases
 
+def sigmoid_training(weightLists, biases, inputLists, expectedValues):
+	return bulk_training(weightLists, biases, inputLists, sigmoid_neuron, expectedValues)
+
 
 def neruotest():
 	print("Starting Weights and Answer Estimation")
@@ -126,15 +129,15 @@ def neruotest():
 #    Quadratic Function
 #------------------------------------------------------------------------------------------------------
 
-training_weights = weights
+#training_weights = weights
 
 #Based on idea that the paper talks about the length of the weights.
-maxlength = len(training_weights[0]) # As in the total number of weights that are in a singular node
+#maxlength = len(training_weights[0]) # As in the total number of weights that are in a singular node
 
-x_0 = 0 #Lowest weight is 0 in sigmoid
-x_1 = random.randint(1,maxlength)#np.random.choice(training_weights)#np.random.rand(1)[0] #Random weight in sigmoid between 0 and 1
-x_2 = maxlength#max(training_weights) #Highest weight is 1 in sigmoid
-x_3 = 0 # Not Initialized Yet.
+#x_0 = 0 #Lowest weight is 0 in sigmoid
+#x_1 = random.randint(1,maxlength)#np.random.choice(training_weights)#np.random.rand(1)[0] #Random weight in sigmoid between 0 and 1
+#x_2 = maxlength#max(training_weights) #Highest weight is 1 in sigmoid
+#x_3 = 0 # Not Initialized Yet.
 
 # A, if a weight set applied to an input set is equal to 1, else 0
 
@@ -163,7 +166,12 @@ def calc_x3_internal(x_0,x_1,x_2, training_data, training_weights):
 		return top_half/.001
 	return top_half/bottom_half
 
-def calc_x(x_0,x_1,x_2, training_data, training_weights):
+def calc_x(training_data, training_weights):
+	maxlength = len(training_weights[0])
+	x_0 = 0 #Lowest weight is 0 in sigmoid
+	x_1 = random.randint(1,maxlength)#np.random.choice(training_weights)#np.random.rand(1)[0] #Random weight in sigmoid between 0 and 1
+	x_2 = maxlength#max(training_weights) #Highest weight is 1 in sigmoid
+	x_3 = 0
 	def f(x):
 		return calc_x_uninitialized(x,training_data,training_weights)
 	x_3 = calc_x3_internal(x_0,x_1,x_2, training_data, training_weights)
@@ -202,11 +210,11 @@ def fulltest():
 	print("Starting Weights and Answer Estimation")
 	print([weights, biases])
 	#print(neuron_layer(weights,inputs,biases,sigmoid_neuron))
-	listofnewweightsbiases = bulk_training(weights,biases, inputs, sigmoid_neuron, expectedOutput)
+	listofnewweightsbiases = sigmoid_training(weights,biases, inputs, expectedOutput)
 	print("Ending Weights and Answer Estimation")
 	print(listofnewweightsbiases)
 	
-	classifier_x = calc_x(x_0,x_1,x_2, inputs, listofnewweightsbiases[0])
+	classifier_x = calc_x(inputs, listofnewweightsbiases[0])
 	print("Classifier Rule Estimation")
 	print(classifier_x)
 
