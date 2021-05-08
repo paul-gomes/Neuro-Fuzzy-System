@@ -77,7 +77,7 @@ def layer1_derivative_chain(weightList, expectedValue, actualValue, Adenduminput
 def layer1_bias_chain(weightList, expectedValue, actualValue, Adenduminputs, maybeBias):
 	dotproduct = np.dot(weightList,Adenduminputs)
 	fullproduct = dotproduct + maybeBias # simple_error(expectedValue, actualValue)
-	return my_derivative_sigmoid(fullproduct)
+	return 0 #my_derivative_sigmoid(fullproduct)
 
 def layer1_weight_adjustment(weightList, bias, expectedValue, actualValue, Adenduminputs):
 	weight_adjustments = layer1_derivative_chain(weightList, expectedValue, actualValue, Adenduminputs, bias)
@@ -113,6 +113,11 @@ def bulk_training(weightLists, biases, inputLists, sigmoid_neuron, expectedValue
 def sigmoid_training(weightLists, biases, inputLists, expectedValues):
 	return bulk_training(weightLists, biases, inputLists, sigmoid_neuron, expectedValues)
 
+def sigmoid_training_special(inputLists, expectedValues):
+	inputlength = len(inputLists[0])
+	weightLists = np.random.rand(1,inputlength)
+	biases = [0]
+	return bulk_training(weightLists, biases, inputLists, sigmoid_neuron, expectedValues)
 
 def neruotest():
 	print("Starting Weights and Answer Estimation")
@@ -204,13 +209,16 @@ def calc_x(training_data, training_weights):
 # Use X_1 to creat the binary clasification somehow???
 
 #classifier(x_0,x_1,x_2, new_inputs,  ,trained_weights)
-
+weights  = np.random.rand(2,3)
+inputs = [[3,3,3],[-3,-3,-3],[4,4,-4]]
+biases = np.random.rand(2)
+expectedOutput = [1,0,1]
 
 def fulltest():
 	print("Starting Weights and Answer Estimation")
 	print([weights, biases])
 	#print(neuron_layer(weights,inputs,biases,sigmoid_neuron))
-	listofnewweightsbiases = sigmoid_training(weights,biases, inputs, expectedOutput)
+	listofnewweightsbiases = sigmoid_training_special(inputs, expectedOutput)
 	print("Ending Weights and Answer Estimation")
 	print(listofnewweightsbiases)
 	
