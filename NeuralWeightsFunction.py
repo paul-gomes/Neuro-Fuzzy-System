@@ -173,7 +173,7 @@ def calc_x3_internal(x_0,x_1,x_2, training_data, training_weights):
 
 def calc_x(training_data, training_weights):
 	maxlength = len(training_weights[0])
-	x_0 = 0 #Lowest weight is 0 in sigmoid
+	x_0 = 1 #Lowest weight is 0 in sigmoid
 	x_1 = random.randint(1,maxlength)#np.random.choice(training_weights)#np.random.rand(1)[0] #Random weight in sigmoid between 0 and 1
 	x_2 = maxlength#max(training_weights) #Highest weight is 1 in sigmoid
 	x_3 = 0
@@ -182,7 +182,7 @@ def calc_x(training_data, training_weights):
 	x_3 = calc_x3_internal(x_0,x_1,x_2, training_data, training_weights)
 	f_x_3 = f(x_3)
 	f_x_2 = f(x_2)
-	while ((f(x_0)- f(x_1))**2 >= 0.1):
+	while ((f(x_0)- f(x_1))**2 > 1):
 		#do all this
 		if (f_x_3 == f_x_2):
 			x_2 = x_3
@@ -226,13 +226,13 @@ def fulltest():
 	print("Classifier Rule Estimation")
 	print(classifier_x)
 
-	somevalue = 3
+	#somevalue = 3
 	def my_rule(x):
 		if my_sigmoid(x) > classifier_x:
 			return 1
 		else:
 			return 0
-	print(my_rule(somevalue))
+	#print(my_rule(somevalue))
 
 
 fulltest()
