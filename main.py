@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-From Dynamic_Clustering import *
+from Dynamic_Clustering import *
+from Fuzzification import *
 
 bcw_data = pd.read_csv("Data/breast_cancer_wisconsin.csv", header = 0)
 bcw_data.drop('id', axis=1, inplace=True) #dropping the id col
@@ -16,12 +17,21 @@ df = pd.concat([data, t], axis=1)
 df = df.rename(columns={"radius_mean": "a","texture_mean":"b","perimeter_mean":"c","diagnosis":"class"})
 print(df.sample(n=5))
 
+#means and sds from dynamic clustering
 MEAN,Std_deviation = Dynamic_clustering(df)
-print(MEAN)
-print(Std_deviation)
-
 
 desired_t = [[1,0],[0,1]]
 #targets in list format for neural netwrork eg. [0,1] for class being B [1,0] for class being M
 targets = np.array([desired_t[int(x)] for x in df.values[:,3:4]])
 print(targets[:5])
+
+#vlaues after fuzzification.. it's a list of list.
+fuzzy_values = []
+for index, row in data.iterrows():
+    f = Fuzzification(row, MEAN, Std_deviation)
+    fuzzy_val = f.fuzzify()
+    fuzzy_values.append(sum(fuzzy_val, []))
+    
+print(fuzzy_values)
+
+

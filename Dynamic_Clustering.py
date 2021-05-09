@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df= pd.read_csv('C:/Users/Hp 840/Downloads/bezdekIris.data',names = ['a','b','c','d','class'])
+#df= pd.read_csv('C:/Users/Hp 840/Downloads/bezdekIris.data',names = ['a','b','c','d','class'])
 
 def clustering(df,count):
     df.sort_values(by=df.columns[count],inplace=True)
@@ -103,25 +103,6 @@ def Dynamic_clustering(df):
     #print(len(MEAN))
     #print(Std_deviation)
     return MEAN,Std_deviation
-
-M,S=Dynamic_clustering(df)
-print(M)
-
-print("\n",S)
-    
-
-
-# In[2]:
-
-
-import pandas as pd
-import numpy as np
-
-
-
-
-# In[ ]:
-
 
 
 

@@ -25,5 +25,8 @@ class Fuzzification:
         
             index = densities.index(max(densities))
             output[index] = 1
+            output = output.tolist()
+            output = [int(x) for x in output]
             fuzzy_output.append(output)
+            #fuzzy_output.append()
         return fuzzy_output
