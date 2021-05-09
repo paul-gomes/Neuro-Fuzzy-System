@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+From Dynamic_Clustering import *
 
 bcw_data = pd.read_csv("Data/breast_cancer_wisconsin.csv", header = 0)
 bcw_data.drop('id', axis=1, inplace=True) #dropping the id col
@@ -12,7 +13,12 @@ t= bcw_data[['diagnosis']].replace(['M','B'],[0,1])
 
 #this is dataframe with cleaned data which has the features and the class(either 0(M) or 1(B))
 df = pd.concat([data, t], axis=1)
+df = df.rename(columns={"radius_mean": "a","texture_mean":"b","perimeter_mean":"c","diagnosis":"class"})
 print(df.sample(n=5))
+
+MEAN,Std_deviation = Dynamic_clustering(df)
+print(MEAN)
+print(Std_deviation)
 
 
 desired_t = [[1,0],[0,1]]
