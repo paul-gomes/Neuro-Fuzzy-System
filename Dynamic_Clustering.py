@@ -86,14 +86,7 @@ def centroid(Cluster_form,Threshhold):
     return mean,SD
 
 
-def Dynamic_clustering(df):    
-    
-    #col_num = len(df.columns)
-    #data = df[df.columns[1:col_num-1]]
-    #column_list= list(data.columns)
-    #for name in column_list:
-        #data = data.rename(columns={name:"feat"+str(column_list.index(name))})
-        
+def Dynamic_clustering(df):       
     count=0   
     MEAN=[]
     Std_deviation=[]
