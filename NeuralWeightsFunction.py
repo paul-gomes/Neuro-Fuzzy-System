@@ -219,7 +219,7 @@ def important_feature_selection(listofweights):
 		returnlist.append((i,count))
 		count += 1
 	newerlist = sorted(returnlist, reverse = True)
-	return newerlist[:5]
+	return newerlist[:10]
 
 
 #classifier(x_0,x_1,x_2, new_inputs,  ,trained_weights)

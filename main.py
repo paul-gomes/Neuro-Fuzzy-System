@@ -42,16 +42,62 @@ for index, row in train_f.iterrows():
     fuzzy_val = f.fuzzify()
     fuzzy_values.append(sum(fuzzy_val, []))
     
+fuzzy_values_test = []
+test_f = test.iloc[: , :-1]
+
+for index, row in test_f.iterrows():
+    f = Fuzzification(row, MEAN, Std_deviation)
+    fuzzy_val = f.fuzzify()
+    fuzzy_values_test .append(sum(fuzzy_val, []))
+
+print(fuzzy_values_test)
 print(fuzzy_values)
 
 
 listofnewweightsbiases = sigmoid_training_special(fuzzy_values, train_t)
-classifier_x = calc_x(fuzzy_values, listofnewweightsbiases[0])
 alternative_top5_features = important_feature_selection(listofnewweightsbiases[0])
 
+result = neuron_layer(listofnewweightsbiases[0],fuzzy_values_test,listofnewweightsbiases[1],sigmoid_neuron)
+#print(result)
+
+def test_nerual_accuracy(listofresults,listofactual):
+	count = 0
+	for result, actual in zip(listofresults, listofactual):
+		if result[0] == actual:
+			count += 1
+	return count/len(listofresults)
 
 
-print(listofnewweightsbiases[0])
-print(classifier_x)
-print(len(listofnewweightsbiases[0][0]))
 print(alternative_top5_features)
+# Result is only for guaging neural network accuracy 
+
+# MAKE RULES METHOD
+# [1,0,1,0,1,0....]
+def myrules(input):
+	if input[16] == 1:
+		return 1
+	if input[63] == 1:
+		return 1
+	if input[0] == 1:
+		return 1
+	if input[80] == 1:
+		return 1
+	if input[3] == 1:
+		return 1
+	return 0
+
+def applyrules(all_inputs):
+	mynewlist = []
+	for inputs in all_inputs:
+		mynewlist.append(myrules(inputs))
+	return mynewlist
+
+def test_rule_accuracy(listofresults,listofactual):
+	count = 0
+	for result, actual in zip(listofresults, listofactual):
+		if result == actual:
+			count += 1
+	return count/len(listofresults)
+
+print(test_rule_accuracy(applyrules(fuzzy_values_test), test_t))
+# Test rules with test data
