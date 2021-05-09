@@ -17,7 +17,7 @@ t= bcw_data[['diagnosis']].replace(['M','B'],[0,1])
 #this is dataframe with cleaned data which has the features and the class(either 0(M) or 1(B))
 df = pd.concat([data, t], axis=1)
 df = df.rename(columns={"radius_mean": "a","texture_mean":"b","perimeter_mean":"c","diagnosis":"class"})
-print(df.sample(n=5))
+#print(df.sample(n=5))
 
 train, test = train_test_split(df, test_size=0.2, random_state=42, shuffle=True)
 
@@ -50,13 +50,14 @@ for index, row in test_f.iterrows():
     fuzzy_val = f.fuzzify()
     fuzzy_values_test .append(sum(fuzzy_val, []))
 
-print(fuzzy_values_test)
-print(fuzzy_values)
+#print(fuzzy_values_test)
+#print(fuzzy_values)
 
 
 listofnewweightsbiases = sigmoid_training_special(fuzzy_values, train_t)
 alternative_top5_features = important_feature_selection(listofnewweightsbiases[0])
-
+#print(train_t)
+#print(fuzzy_values_test)
 result = neuron_layer(listofnewweightsbiases[0],fuzzy_values_test,listofnewweightsbiases[1],sigmoid_neuron)
 #print(result)
 
@@ -66,7 +67,7 @@ def test_nerual_accuracy(listofresults,listofactual):
 		if result[0] == actual:
 			count += 1
 	return count/len(listofresults)
-
+#print(listofnewweightsbiases[0])
 
 print(alternative_top5_features)
 # Result is only for guaging neural network accuracy 
@@ -74,15 +75,25 @@ print(alternative_top5_features)
 # MAKE RULES METHOD
 # [1,0,1,0,1,0....]
 def myrules(input):
-	if input[16] == 1:
+	if input[24] == 1:
 		return 1
-	if input[63] == 1:
+	if input[78] == 1:
 		return 1
-	if input[0] == 1:
+	if input[66] == 1:
 		return 1
-	if input[80] == 1:
+	if input[34] == 1:
 		return 1
-	if input[3] == 1:
+	if input[28] == 1:
+		return 1
+	if input[48] == 1:
+		return 1
+	if input[4] == 1:
+		return 1
+	if input[59] == 1:
+		return 1
+	if input[2] == 1:
+		return 1
+	if input[68] == 1:
 		return 1
 	return 0
 

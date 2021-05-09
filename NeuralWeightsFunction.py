@@ -17,7 +17,7 @@ from collections import Counter
 #------------------------------------------------------------------------------------------------------
 
 # Testing Comment for Compilation
-print('Starting')
+#print('Starting')
 
 #------------------------------------------------------------------------------------------------------
 #    Neural Network
@@ -70,7 +70,7 @@ def layer1_derivative_chain(weightList, expectedValue, actualValue, Adenduminput
 	sigmoid_derivative = my_derivative_sigmoid(fullproduct)
 	#for w_weight in weightList:
 	for in_input in Adenduminputs:
-		per_weight_derivative = sigmoid_derivative * in_input #w_weight
+		per_weight_derivative = .01 * sigmoid_derivative * (expectedValue - actualValue) #in_input #w_weight
 		full_output.append(per_weight_derivative)
 	return full_output
 
@@ -82,7 +82,7 @@ def layer1_bias_chain(weightList, expectedValue, actualValue, Adenduminputs, may
 def layer1_weight_adjustment(weightList, bias, expectedValue, actualValue, Adenduminputs):
 	weight_adjustments = layer1_derivative_chain(weightList, expectedValue, actualValue, Adenduminputs, bias)
 	bias_adjustment = layer1_bias_chain(weightList, expectedValue, actualValue, Adenduminputs, bias)
-	new_weightList = np.add(weightList, weight_adjustments) #np.add for opposite affect subtract
+	new_weightList = np.subtract(weightList, weight_adjustments) #np.add for opposite affect subtract
 	new_bias = bias + bias_adjustment
 	return [new_weightList, new_bias]
 
@@ -104,7 +104,7 @@ def multiple_training_attempts(weightLists, biases, inputLists, sigmoid_neuron, 
 	return [new_weightLists, new_biasList]
 
 def bulk_training(weightLists, biases, inputLists, sigmoid_neuron, expectedValues):
-	for x in range(1):
+	for x in range(2):
 		listofnewweightsbiases = multiple_training_attempts(weightLists, biases, inputLists, sigmoid_neuron, expectedValues)
 		weightLists = listofnewweightsbiases[0]
 		biases = listofnewweightsbiases[1]
@@ -218,7 +218,7 @@ def important_feature_selection(listofweights):
 	for i in newlist:
 		returnlist.append((i,count))
 		count += 1
-	newerlist = sorted(returnlist, reverse = True)
+	newerlist = sorted(returnlist, reverse = False)
 	return newerlist[:10]
 
 
@@ -250,7 +250,7 @@ def fulltest():
 	#print(my_rule(somevalue))
 
 
-fulltest()
+#fulltest()
 
 # Example Output
 # Starting
