@@ -88,15 +88,16 @@ def centroid(Cluster_form,Threshhold):
 
 def Dynamic_clustering(df):    
     
-    col_num = len(df.columns)
-    data = df[df.columns[1:col_num-1]]
-    column_list= list(data.columns)
-    for name in column_list:
-        data = data.rename(columns={name:"feat"+str(column_list.index(name))})
+    #col_num = len(df.columns)
+    #data = df[df.columns[1:col_num-1]]
+    #column_list= list(data.columns)
+    #for name in column_list:
+        #data = data.rename(columns={name:"feat"+str(column_list.index(name))})
+        
     count=0   
     MEAN=[]
     Std_deviation=[]
-    while count<len(df.columns):
+    while count<len(df.columns)-1:
         a,b=clustering(df,count)
         MEAN.append(a)
         Std_deviation.append(b)
