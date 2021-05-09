@@ -9,14 +9,17 @@ bcw_data = pd.read_csv("Data/breast_cancer_wisconsin.csv", header = 0)
 bcw_data.drop('id', axis=1, inplace=True) #dropping the id col
 
 #selects the features you need
-data = bcw_data[bcw_data.columns[1:4]]
+data = bcw_data[bcw_data.columns[1:len(bcw_data.columns)-1]]
+column_list= list(data.columns)
+for name in column_list:
+    data = data.rename(columns={name:"feat"+str(column_list.index(name))})
 
 #targets classes 
 t= bcw_data[['diagnosis']].replace(['M','B'],[0,1])
 
 #this is dataframe with cleaned data which has the features and the class(either 0(M) or 1(B))
 df = pd.concat([data, t], axis=1)
-df = df.rename(columns={"radius_mean": "a","texture_mean":"b","perimeter_mean":"c","diagnosis":"class"})
+df = df.rename(columns={"diagnosis":"class"})
 #print(df.sample(n=5))
 
 train, test = train_test_split(df, test_size=0.2, random_state=42, shuffle=True)
