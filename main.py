@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from Dynamic_Clustering import *
 from Fuzzification import *
+from NeuralWeightsFunction import *
 
 bcw_data = pd.read_csv("Data/breast_cancer_wisconsin.csv", header = 0)
 bcw_data.drop('id', axis=1, inplace=True) #dropping the id col
@@ -35,3 +36,8 @@ for index, row in data.iterrows():
 print(fuzzy_values)
 
 
+listofnewweightsbiases = sigmoid_training_special(fuzzy_values, targets)
+classifier_x = calc_x(fuzzy_values, listofnewweightsbiases[0])
+
+print(listofnewweightsbiases)
+print(classifier_x)
