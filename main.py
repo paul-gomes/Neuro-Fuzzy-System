@@ -21,13 +21,13 @@ print(df.sample(n=5))
 
 train, test = train_test_split(df, test_size=0.2, random_state=42, shuffle=True)
 
-desired_t = [[1,0],[0,1]]
+#desired_t = [[1,0],[0,1]]
 #targets in list format for neural netwrork eg. [0,1] for class being B [1,0] for class being M
-train_t = np.array([desired_t[int(x)] for x in train.values[:,3:4]])
-print(train_t[:5])
+train_t = [int(x) for x in train.values[:,3:4]]
+#print(train_t[:5])
 
-test_t = np.array([desired_t[int(x)] for x in test.values[:,3:4]])
-print(test_t[:5])
+test_t = [int(x) for x in test.values[:,3:4]]
+#print(test_t[:5])
 
 
 #means and sds from dynamic clustering
