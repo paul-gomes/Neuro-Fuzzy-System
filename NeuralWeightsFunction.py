@@ -168,7 +168,7 @@ def calc_x3_internal(x_0,x_1,x_2, training_data, training_weights):
 	top_half = f(x_2)*((x_0**2)-(x_1**2)) + f(x_0)*((x_1**2)-(x_2**2)) + f(x_1)*((x_2**2)-(x_0**2))
 	bottom_half = 2*f(x_2)*(x_0-x_1) +  2*f(x_0)*(x_1-x_2) +  2*f(x_1)*(x_2-x_0)
 	if bottom_half == 0:
-		return top_half/.001
+		return top_half/.1
 	return top_half/bottom_half
 
 def calc_x(training_data, training_weights):
@@ -182,7 +182,9 @@ def calc_x(training_data, training_weights):
 	x_3 = calc_x3_internal(x_0,x_1,x_2, training_data, training_weights)
 	f_x_3 = f(x_3)
 	f_x_2 = f(x_2)
-	while ((f(x_0)- f(x_1))**2 > 1):
+	f_x_0 = f(x_0)
+	f_x_1 = f(x_1)
+	while ((f_x_0- f_x_1) >= 0):
 		#do all this
 		if (f_x_3 == f_x_2):
 			x_2 = x_3
@@ -196,10 +198,10 @@ def calc_x(training_data, training_weights):
 
 		x_1 = x_3
 		f_x_1 = f_x_3
-		top_half = f_x_2*((x_0**2)-(x_1**2)) + f(x_0)*((x_1**2)-(x_2**2)) + f_x_1*((x_2**2)-(x_0**2))
-		bottom_half = 2*f_x_2*(x_0-x_1) +  2*f(x_0)*(x_1-x_2) +  2*f_x_1*(x_2-x_0)
+		top_half = f_x_2*((x_0**2)-(x_1**2)) + f_x_0*((x_1**2)-(x_2**2)) + f_x_1*((x_2**2)-(x_0**2))
+		bottom_half = 2*f_x_2*(x_0-x_1) +  2*f_x_0*(x_1-x_2) +  2*f_x_1*(x_2-x_0)
 		if bottom_half == 0:
-			x_3 = top_half/.001
+			x_3 = top_half/.1
 		else:
 			x_3 = top_half/bottom_half
 		f_x_3 = f(x_3)
@@ -207,6 +209,18 @@ def calc_x(training_data, training_weights):
 	return x_1
 #print(calc_x(x_0,x_1,x_2, inputs, weights))
 # Use X_1 to creat the binary clasification somehow???
+
+
+def important_feature_selection(listofweights):
+	newlist = listofweights[0]
+	returnlist = []
+	count = 0
+	for i in newlist:
+		returnlist.append((i,count))
+		count += 1
+	newerlist = sorted(returnlist, reverse = True)
+	return newerlist[:5]
+
 
 #classifier(x_0,x_1,x_2, new_inputs,  ,trained_weights)
 weights  = np.random.rand(2,3)
@@ -222,7 +236,8 @@ def fulltest():
 	print("Ending Weights and Answer Estimation")
 	print(listofnewweightsbiases)
 	
-	classifier_x = calc_x(inputs, listofnewweightsbiases[0])
+	#classifier_x = calc_x(inputs, listofnewweightsbiases[0])
+	classifier_x = important_feature_selection(listofnewweightsbiases[0])
 	print("Classifier Rule Estimation")
 	print(classifier_x)
 

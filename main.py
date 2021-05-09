@@ -38,6 +38,11 @@ print(fuzzy_values)
 
 listofnewweightsbiases = sigmoid_training_special(fuzzy_values, targets)
 classifier_x = calc_x(fuzzy_values, listofnewweightsbiases[0])
+alternative_top5_features = important_feature_selection(listofnewweightsbiases[0])
 
-print(listofnewweightsbiases)
+
+
+print(listofnewweightsbiases[0])
 print(classifier_x)
+print(len(listofnewweightsbiases[0][0]))
+print(alternative_top5_features)
