@@ -28,16 +28,15 @@ train, test = train_test_split(df, test_size=0.2, random_state=42, shuffle=False
 #desired_t = [[1,0],[0,1]]
 #targets in list format for neural netwrork eg. [0,1] for class being B [1,0] for class being M
 train_t = [int(x) for x in train.values[:,-1]]
-#print(train_t[:5])
 
 test_t = [int(x) for x in test.values[:,-1]]
-#print(test_t[:5])
+
 
 
 #means and sds from dynamic clustering
 MEAN,Std_deviation = Dynamic_clustering(train)
 
-#vlaues after fuzzification.. it's a list of list.
+#values after fuzzification.. it's a list of list.
 fuzzy_values = []
 train_f = train.iloc[: , :-1]
 
@@ -54,20 +53,17 @@ for index, row in test_f.iterrows():
     fuzzy_val = f.fuzzify()
     fuzzy_values_test .append(sum(fuzzy_val, []))
 
-#print(fuzzy_values_test)
-#print(fuzzy_values)
 
 
-
+# Training the network to pick out best weights
 listofnewweightsbiases = sigmoid_training_special(fuzzy_values, train_t)
+#sorting the weights
 sortedweights = important_feature_selection(listofnewweightsbiases[0])
-alternative_top5_features = sortedweights[:5]
 
 
 def g(x):
 	return thefunction(x,sortedweights,fuzzy_values)
-
-num = gss(g,0,50)
+num = gss(g,0,20)
 
 #print(train_t)
 #print("\n")
@@ -75,31 +71,30 @@ num = gss(g,0,50)
 #result = neuron_layer(listofnewweightsbiases[0],fuzzy_values_test,listofnewweightsbiases[1],sigmoid_neuron)
 #print(result)
 
+# Finding the accuracy of our rule creation.
+
 def test_nerual_accuracy(listofresults,listofactual):
 	count = 0
 	for result, actual in zip(listofresults, listofactual):
 		if result[0] == actual:
 			count += 1
 	return count/len(listofresults)
-#print(listofnewweightsbiases[0])
 
-print(alternative_top5_features)
-print(len(listofnewweightsbiases[0][0]))
 # Result is only for guaging neural network accuracy 
-
 # MAKE RULES METHOD
 # [1,0,1,0,1,0....]
-def myrules(input):
-	for a in alternative_top5_features:
+# n specifies the no: of important feature chosen
+def myrules(input,n):
+	for a in sortedweights[:n]:
 		#print(a[1])
 		if input[a[1]] == 1:
 			return 1
 	return 0
 
-def applyrules(all_inputs):
+def applyrules(all_inputs,n):
 	mynewlist = []
 	for inputs in all_inputs:
-		mynewlist.append(myrules(inputs))
+		mynewlist.append(myrules(inputs,n))
 	return mynewlist
 
 def test_rule_accuracy(listofresults,listofactual):
@@ -109,5 +104,6 @@ def test_rule_accuracy(listofresults,listofactual):
 			count += 1
 	return count/len(listofresults)
 
-print(test_rule_accuracy(applyrules(fuzzy_values_test), test_t))
-# Test rules with test data
+for i in [3,5,8,10,15,int(num)]:
+	print("The accuracy of our rules  with top" , i, "features is:", test_rule_accuracy(applyrules(fuzzy_values_test,i), test_t))
+
