@@ -3,6 +3,7 @@ import numpy as np
 from Dynamic_Clustering import *
 from Fuzzification import *
 from NeuralWeightsFunction import *
+from Quadraticfunction import *
 from sklearn.model_selection import train_test_split
 
 bcw_data = pd.read_csv("Data/breast_cancer_wisconsin.csv", header = 0)
@@ -15,7 +16,7 @@ for name in column_list:
     data = data.rename(columns={name:"feat"+str(column_list.index(name))})
 
 #targets classes 
-t= bcw_data[['diagnosis']].replace(['M','B'],[0,1])
+t= bcw_data[['diagnosis']].replace(['M','B'],[1,0])
 
 #this is dataframe with cleaned data which has the features and the class(either 0(M) or 1(B))
 df = pd.concat([data, t], axis=1)
@@ -57,12 +58,21 @@ for index, row in test_f.iterrows():
 #print(fuzzy_values)
 
 
+
 listofnewweightsbiases = sigmoid_training_special(fuzzy_values, train_t)
-alternative_top5_features = important_feature_selection(listofnewweightsbiases[0])
+sortedweights = important_feature_selection(listofnewweightsbiases[0])
+alternative_top5_features = sortedweights[:5]
+
+
+def g(x):
+	return thefunction(x,sortedweights,fuzzy_values)
+
+num = gss(g,0,50)
+
 #print(train_t)
 #print("\n")
 #print(fuzzy_values_test)
-result = neuron_layer(listofnewweightsbiases[0],fuzzy_values_test,listofnewweightsbiases[1],sigmoid_neuron)
+#result = neuron_layer(listofnewweightsbiases[0],fuzzy_values_test,listofnewweightsbiases[1],sigmoid_neuron)
 #print(result)
 
 def test_nerual_accuracy(listofresults,listofactual):
@@ -73,7 +83,7 @@ def test_nerual_accuracy(listofresults,listofactual):
 	return count/len(listofresults)
 #print(listofnewweightsbiases[0])
 
-#print(alternative_top5_features)
+print(alternative_top5_features)
 print(len(listofnewweightsbiases[0][0]))
 # Result is only for guaging neural network accuracy 
 
