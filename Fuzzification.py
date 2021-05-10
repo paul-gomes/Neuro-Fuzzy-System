@@ -7,6 +7,11 @@ class Fuzzification:
         self.sd = sd #sds from dynamic clustering for each features
         
     def normal_density(self, x, mean, sd):
+        if sd == 0:
+            if x == mean:
+                return 1
+            else:
+                return 0
         return (1/(sd*(2*np.pi))**(0.5))* np.exp(-0.5*((x-mean)/sd)**(2))
     
     def fuzzify(self):

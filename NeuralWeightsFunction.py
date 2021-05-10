@@ -70,7 +70,7 @@ def layer1_derivative_chain(weightList, expectedValue, actualValue, Adenduminput
 	sigmoid_derivative = my_derivative_sigmoid(fullproduct)
 	#for w_weight in weightList:
 	for in_input in Adenduminputs:
-		per_weight_derivative = .01 * sigmoid_derivative * (expectedValue - actualValue) #in_input #w_weight
+		per_weight_derivative = -.1 * sigmoid_derivative * (expectedValue - actualValue) #in_input #w_weight
 		full_output.append(per_weight_derivative)
 	return full_output
 
@@ -104,7 +104,7 @@ def multiple_training_attempts(weightLists, biases, inputLists, sigmoid_neuron, 
 	return [new_weightLists, new_biasList]
 
 def bulk_training(weightLists, biases, inputLists, sigmoid_neuron, expectedValues):
-	for x in range(2):
+	for x in range(10):
 		listofnewweightsbiases = multiple_training_attempts(weightLists, biases, inputLists, sigmoid_neuron, expectedValues)
 		weightLists = listofnewweightsbiases[0]
 		biases = listofnewweightsbiases[1]
@@ -218,9 +218,8 @@ def important_feature_selection(listofweights):
 	for i in newlist:
 		returnlist.append((i,count))
 		count += 1
-	newerlist = sorted(returnlist, reverse = False)
-	return newerlist[:10]
-
+	newerlist = sorted(returnlist, reverse = True)
+	return newerlist[:50]
 
 #classifier(x_0,x_1,x_2, new_inputs,  ,trained_weights)
 weights  = np.random.rand(2,3)

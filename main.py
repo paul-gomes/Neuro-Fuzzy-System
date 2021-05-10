@@ -22,14 +22,14 @@ df = pd.concat([data, t], axis=1)
 df = df.rename(columns={"diagnosis":"class"})
 #print(df.sample(n=5))
 
-train, test = train_test_split(df, test_size=0.2, random_state=42, shuffle=True)
+train, test = train_test_split(df, test_size=0.2, random_state=42, shuffle=False)
 
 #desired_t = [[1,0],[0,1]]
 #targets in list format for neural netwrork eg. [0,1] for class being B [1,0] for class being M
-train_t = [int(x) for x in train.values[:,3:4]]
+train_t = [int(x) for x in train.values[:,-1]]
 #print(train_t[:5])
 
-test_t = [int(x) for x in test.values[:,3:4]]
+test_t = [int(x) for x in test.values[:,-1]]
 #print(test_t[:5])
 
 
@@ -60,6 +60,7 @@ for index, row in test_f.iterrows():
 listofnewweightsbiases = sigmoid_training_special(fuzzy_values, train_t)
 alternative_top5_features = important_feature_selection(listofnewweightsbiases[0])
 #print(train_t)
+#print("\n")
 #print(fuzzy_values_test)
 result = neuron_layer(listofnewweightsbiases[0],fuzzy_values_test,listofnewweightsbiases[1],sigmoid_neuron)
 #print(result)
@@ -72,32 +73,17 @@ def test_nerual_accuracy(listofresults,listofactual):
 	return count/len(listofresults)
 #print(listofnewweightsbiases[0])
 
-print(alternative_top5_features)
+#print(alternative_top5_features)
+print(len(listofnewweightsbiases[0][0]))
 # Result is only for guaging neural network accuracy 
 
 # MAKE RULES METHOD
 # [1,0,1,0,1,0....]
 def myrules(input):
-	if input[24] == 1:
-		return 1
-	if input[78] == 1:
-		return 1
-	if input[66] == 1:
-		return 1
-	if input[34] == 1:
-		return 1
-	if input[28] == 1:
-		return 1
-	if input[48] == 1:
-		return 1
-	if input[4] == 1:
-		return 1
-	if input[59] == 1:
-		return 1
-	if input[2] == 1:
-		return 1
-	if input[68] == 1:
-		return 1
+	for a in alternative_top5_features:
+		#print(a[1])
+		if input[a[1]] == 1:
+			return 1
 	return 0
 
 def applyrules(all_inputs):
