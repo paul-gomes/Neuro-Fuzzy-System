@@ -8,7 +8,7 @@ class Fuzzification:
         
     def normal_density(self, x, mean, sd):
         if sd == 0:
-            if x == mean:
+            if mean == x:
                 return 1
             else:
                 return 0
