@@ -68,11 +68,11 @@ The accuracy of our rules  with top 10 features is: 0.5692307692307692
 # References
 1. Phichit Napook and Narissara Eiamkanitcaht. 2015. Forecasting algorithm developed from   the neuro: fuzzy system. In Adjunct Proceedings of the 2015 ACM International Joint Conference on Pervasive and Ubiquitous Computing and Proceedings of the 2015 ACM International Symposium on Wearable Computers(UbiComp/ISWC'15 Adjunct). Association for Computing Machinery, New York, NY, USA, 1189–1196. DOI:https://doi.org/10.1145/2800835.2800983
 
-+ N. Eiamkanitchat, N. Theera-Umpon and S. Auephanwiriyakul, "A novel neuro-fuzzy method for linguistic feature selection and rule-based classification," 2010 The 2nd International Conference on Computer and Automation Engineering (ICCAE), 2010, pp. 247-252, doi: 10.1109/ICCAE.2010.5451487.
+ N. Eiamkanitchat, N. Theera-Umpon and S. Auephanwiriyakul, "A novel neuro-fuzzy method for linguistic feature selection and rule-based classification," 2010 The 2nd International Conference on Computer and Automation Engineering (ICCAE), 2010, pp. 247-252, doi: 10.1109/ICCAE.2010.5451487.
 
-+ P. Wongchomphu and N. Eiamkanitchat, "Enhance Neuro-fuzzy system for classification using dynamic clustering," The 4th Joint International Conference on Information and Communication Technology, Electronic and Electrical Engineering (JICTEE), 2014, pp. 1-6, doi: 10.1109/JICTEE.2014.6804071.
+ P. Wongchomphu and N. Eiamkanitchat, "Enhance Neuro-fuzzy system for classification using dynamic clustering," The 4th Joint International Conference on Information and Communication Technology, Electronic and Electrical Engineering (JICTEE), 2014, pp. 1-6, doi: 10.1109/JICTEE.2014.6804071.
 
-+ Heisnam Rohen Singh, Saroj Kr. Biswas, Biswajit Purkayastha, A neuro-fuzzy classification technique using dynamic clustering and GSS rule generation, Journal of Computational and Applied Mathematics, Volume 309, 2017, Pages 683-694, ISSN 0377-0427, https://doi.org/10.1016/j.cam.2016.04.023.
+ Heisnam Rohen Singh, Saroj Kr. Biswas, Biswajit Purkayastha, A neuro-fuzzy classification technique using dynamic clustering and GSS rule generation, Journal of Computational and Applied Mathematics, Volume 309, 2017, Pages 683-694, ISSN 0377-0427, https://doi.org/10.1016/j.cam.2016.04.023.
 
 
 
